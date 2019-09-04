@@ -13,11 +13,13 @@ import (
 	"golang.org/x/sync/semaphore"
 )
 
+// PortScanner struct
 type PortScanner struct {
 	ip   string
 	lock *semaphore.Weighted
 }
 
+// Ulimit gets the maximum number of open files allowed by the OS.
 func Ulimit() int64 {
 	out, err := exec.Command("ulimit", "-n").Output()
 	if err != nil {
@@ -34,6 +36,7 @@ func Ulimit() int64 {
 	return i
 }
 
+// ScanPort scans the target IP/port to determine if it's open or closed.
 func ScanPort(ip string, port int, timeout time.Duration) {
 	target := fmt.Sprintf("%s:%d", ip, port)
 	conn, err := net.DialTimeout("tcp", target, timeout)
@@ -42,19 +45,22 @@ func ScanPort(ip string, port int, timeout time.Duration) {
 		if strings.Contains(err.Error(), "too many open files") {
 			time.Sleep(timeout)
 			ScanPort(ip, port, timeout)
-		} else {
-			fmt.Println(port, "closed")
+			//} else {
+			//	fmt.Println(port, "closed")
 		}
 		return
 	}
 
 	conn.Close()
-	fmt.Println(port, "open")
+	fmt.Printf("%-5d %-5s %-18s\n", port, "open", DescribePort(port))
 }
 
+// Start port scan.
 func (ps *PortScanner) Start(f, l int, timeout time.Duration) {
 	wg := sync.WaitGroup{}
 	defer wg.Wait()
+
+	fmt.Printf("%-5s %-5s %-18s\n", "Port", "State", "Service")
 
 	for port := f; port <= l; port++ {
 		ps.lock.Acquire(context.TODO(), 1)
