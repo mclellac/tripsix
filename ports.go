@@ -3,7 +3,6 @@ package main
 // PortState type
 type PortState uint8
 
-// Port constant for the varius states
 const (
 	PortUnknown PortState = iota
 	PortOpen
@@ -11,7 +10,6 @@ const (
 	PortFiltered
 )
 
-// DefaultPorts ints
 var DefaultPorts []int
 
 func init() {
