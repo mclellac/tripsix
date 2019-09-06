@@ -50,7 +50,7 @@ func ScanPort(ip string, port int, timeout time.Duration) {
 	}
 
 	conn.Close()
-	fmt.Printf("%-5d %-5s %-18s\n", port, "open", DescribePort(port))
+	fmt.Printf("%-20d %-20s %-20s\n", port, "open", DescribePort(port))
 }
 
 // Start creates a channel to begin the port scan.
@@ -58,12 +58,21 @@ func (ps *PortScanner) Start(f, l int, timeout time.Duration) {
 	wg := sync.WaitGroup{}
 	defer wg.Wait()
 
-	banner := "Starting TripSix scan...\n\n"
-	sep := strings.Repeat("-", 19)
+	banner := `
+████████╗██████╗ ██╗██████╗ ███████╗██╗██╗  ██╗
+╚══██╔══╝██╔══██╗██║██╔══██╗██╔════╝██║╚██╗██╔╝
+   ██║   ██████╔╝██║██████╔╝███████╗██║ ╚███╔╝
+   ██║   ██╔══██╗██║██╔═══╝ ╚════██║██║ ██╔██╗
+   ██║   ██║  ██║██║██║     ███████║██║██╔╝ ██╗
+   ╚═╝   ╚═╝  ╚═╝╚═╝╚═╝     ╚══════╝╚═╝╚═╝  ╚═╝
+
+
+`
+	sep := strings.Repeat("-", 49)
 
 	fmt.Printf(banner)
 
-	fmt.Printf("%-5s %-5s %-18s\n", "PORT", "STATE", "SERVICE")
+	fmt.Printf("%-20s %-20s %-20s\n", "PORT", "STATE", "SERVICE")
 	fmt.Println(sep)
 
 	for port := f; port <= l; port++ {
