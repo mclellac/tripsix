@@ -21,7 +21,7 @@ type PortScanner struct {
 
 // Ulimit gets the maximum number of open files allowed by the OS.
 func Ulimit() int64 {
-	out, err := exec.Command("ulimit", "-n").Output()
+	out, err := exec.Command("bash", "-c", "ulimit -n").Output()
 	if err != nil {
 		panic(err)
 	}
@@ -63,8 +63,7 @@ func (ps *PortScanner) Start(f, l int, timeout time.Duration) {
 
 	fmt.Printf(banner)
 
-	fmt.Println(sep)
-	fmt.Printf("%-5s %-5s %-18s\n", "Port", "State", "Service")
+	fmt.Printf("%-5s %-5s %-18s\n", "PORT", "STATE", "SERVICE")
 	fmt.Println(sep)
 
 	for port := f; port <= l; port++ {
