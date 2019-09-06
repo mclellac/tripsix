@@ -50,7 +50,7 @@ func ScanPort(ip string, port int, timeout time.Duration) {
 	}
 
 	conn.Close()
-	fmt.Printf("%-20d %-20s %-20s\n", port, "open", DescribePort(port))
+	fmt.Printf("%-18d %-7s %20s\n", port, "open", DescribePort(port))
 }
 
 // Start creates a channel to begin the port scan.
@@ -68,11 +68,11 @@ func (ps *PortScanner) Start(f, l int, timeout time.Duration) {
 
 
 `
-	sep := strings.Repeat("-", 49)
+	sep := strings.Repeat("-", 47)
 
 	fmt.Printf(banner)
 
-	fmt.Printf("%-20s %-20s %-20s\n", "PORT", "STATE", "SERVICE")
+	fmt.Printf("%-18s %-7s %20s\n", "PORT", "STATE", "SERVICE")
 	fmt.Println(sep)
 
 	for port := f; port <= l; port++ {
