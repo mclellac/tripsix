@@ -54,7 +54,7 @@ func ScanPort(ip string, port int, timeout time.Duration) {
 }
 
 // Start creates a channel to begin the port scan.
-func (ps *PortScanner) Start(f, l int, timeout time.Duration) {
+func (ps *PortScanner) Start(first, last int, timeout time.Duration) {
 	wg := sync.WaitGroup{}
 	defer wg.Wait()
 
@@ -75,7 +75,7 @@ func (ps *PortScanner) Start(f, l int, timeout time.Duration) {
 	fmt.Printf("%-18s %-7s %20s\n", "PORT", "STATE", "SERVICE")
 	fmt.Println(sep)
 
-	for port := f; port <= l; port++ {
+	for port := first; port <= last; port++ {
 		ps.Lock.Acquire(context.TODO(), 1)
 		wg.Add(1)
 		go func(port int) {
