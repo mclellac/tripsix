@@ -1,4 +1,4 @@
-package main
+package scanner
 
 // PortState type
 type PortState uint8
