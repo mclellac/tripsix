@@ -85,11 +85,3 @@ func (ps *PortScanner) Start(f, l int, timeout time.Duration) {
 		}(port)
 	}
 }
-
-//func main() {
-//	ps := &PortScanner{
-//		ip:   "127.0.0.1",
-//		lock: semaphore.NewWeighted(Ulimit()),
-//	}
-//	ps.Start(1, 65535, 500*time.Millisecond)
-//}
