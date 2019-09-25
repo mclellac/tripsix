@@ -15,8 +15,8 @@ import (
 
 // PortScanner struct
 type PortScanner struct {
-	ip   string
-	lock *semaphore.Weighted
+	IP   string
+	Lock *semaphore.Weighted
 }
 
 // Ulimit gets the maximum number of open files allowed by the OS.
@@ -76,20 +76,20 @@ func (ps *PortScanner) Start(f, l int, timeout time.Duration) {
 	fmt.Println(sep)
 
 	for port := f; port <= l; port++ {
-		ps.lock.Acquire(context.TODO(), 1)
+		ps.Lock.Acquire(context.TODO(), 1)
 		wg.Add(1)
 		go func(port int) {
-			defer ps.lock.Release(1)
+			defer ps.Lock.Release(1)
 			defer wg.Done()
-			ScanPort(ps.ip, port, timeout)
+			ScanPort(ps.IP, port, timeout)
 		}(port)
 	}
 }
 
-func main() {
-	ps := &PortScanner{
-		ip:   "127.0.0.1",
-		lock: semaphore.NewWeighted(Ulimit()),
-	}
-	ps.Start(1, 65535, 500*time.Millisecond)
-}
+//func main() {
+//	ps := &PortScanner{
+//		ip:   "127.0.0.1",
+//		lock: semaphore.NewWeighted(Ulimit()),
+//	}
+//	ps.Start(1, 65535, 500*time.Millisecond)
+//}
