@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/mclellac/scanner"
+	"github.com/mclellac/tripsix/scanner"
 	"github.com/urfave/cli"
 )
 
