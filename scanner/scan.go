@@ -41,6 +41,8 @@ func ScanPort(ip string, port int, timeout time.Duration) {
 	target := fmt.Sprintf("%s:%d", ip, port)
 	conn, err := net.DialTimeout("tcp", target, timeout)
 
+	fmt.Sprintf("%s:%d", ip, port)
+
 	if err != nil {
 		if strings.Contains(err.Error(), "too many open files") {
 			time.Sleep(timeout)
@@ -71,6 +73,8 @@ func (ps *PortScanner) Start(first, last int, timeout time.Duration) {
 	sep := strings.Repeat("-", 47)
 
 	fmt.Printf(banner)
+
+	fmt.Printf("Scanning %v:%v-%v\n\n", ps.IP, first, last)
 
 	fmt.Printf("%-18s %-7s %20s\n", "PORT", "STATE", "SERVICE")
 	fmt.Println(sep)
