@@ -9,5 +9,6 @@ require (
 	github.com/spf13/viper v1.4.0
 	github.com/tj/go-spin v1.1.0 // indirect
 	github.com/urfave/cli v1.22.1
+	github.com/urfave/cli/v2 v2.0.0-alpha.2
 	golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e
 )
