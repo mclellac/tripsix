@@ -3,13 +3,16 @@ package scanner
 import (
 	"context"
 	"fmt"
+	"log"
 	"net"
+	"os"
 	"os/exec"
 	"strconv"
 	"strings"
 	"sync"
 	"time"
 
+	"github.com/briandowns/spinner"
 	"golang.org/x/sync/semaphore"
 )
 
@@ -79,6 +82,16 @@ func (ps *PortScanner) Start(first, last int, timeout time.Duration) {
 	fmt.Printf("%-18s %-7s %20s\n", "PORT", "STATE", "SERVICE")
 	fmt.Println(sep)
 
+	s := spinner.New(spinner.CharSets[25], 100*time.Millisecond)
+	s.Suffix = " Scanning ports..."
+	s.Writer = os.Stderr
+
+	if err := s.Color("red", "bold"); err != nil {
+		log.Fatalln(err)
+	}
+
+	s.Start()
+
 	for port := first; port <= last; port++ {
 		ps.Lock.Acquire(context.TODO(), 1)
 		wg.Add(1)
@@ -88,4 +101,7 @@ func (ps *PortScanner) Start(first, last int, timeout time.Duration) {
 			ScanPort(ps.IP, port, timeout)
 		}(port)
 	}
+
+	s.Stop()
+	println("")
 }

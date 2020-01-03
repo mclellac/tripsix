@@ -3,6 +3,7 @@ module github.com/mclellac/tripsix
 go 1.13
 
 require (
+	github.com/briandowns/spinner v1.8.0
 	github.com/cpuguy83/go-md2man/v2 v2.0.0 // indirect
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/spf13/cobra v0.0.5
